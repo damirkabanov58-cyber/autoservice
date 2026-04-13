@@ -268,33 +268,33 @@
 
 <!-- HERO -->
 <section class="hero">
-  <video id="bg1" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:1; transition: opacity 1.5s ease;">
+  <video id="bg1" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:1; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source src="images/car1n.mp4" type="video/mp4">
   </video>
 
-  <video id="bg2" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+  <video id="bg2" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source data-src="images/car2n.mp4" type="video/mp4">
   </video>
 
-  <video id="bg3" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+  <video id="bg3" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source data-src="images/car3n.mp4" type="video/mp4">
   </video>
 
-  <video id="bg4" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+  <video id="bg4" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source data-src="images/car4n.mp4" type="video/mp4">
   </video>
 
-  <video id="bg5" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+  <video id="bg5" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source data-src="images/car5n.mp4" type="video/mp4">
   </video>
 
-  <video id="bg6" autoplay muted loop playsinline
-       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+  <video id="bg6" autoplay muted loop playsinline webkit-playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source data-src="images/car6n.mp4" type="video/mp4">
   </video>
   <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(6,6,16,0.5) 100%); z-index:1;"></div>
@@ -701,16 +701,21 @@ function animateCount(el, target, suffix, decimals) {
   }
   requestAnimationFrame(step);
 }
+let statsTimer = null;
 const statsObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      animateCount(document.getElementById('s1'), 4.9, '', true);
-      animateCount(document.getElementById('s2'), 500, '+', false);
-      animateCount(document.getElementById('s3'), 8, ' лет', false);
-      statsObserver.disconnect();
+      statsTimer = setTimeout(() => {
+        animateCount(document.getElementById('s1'), 4.9, '', true);
+        animateCount(document.getElementById('s2'), 500, '+', false);
+        animateCount(document.getElementById('s3'), 8, ' лет', false);
+        statsObserver.disconnect();
+      }, 500);
+    } else {
+      clearTimeout(statsTimer);
     }
   });
-});
+}, { threshold: 0.5 });
 statsObserver.observe(document.getElementById('s1'));
 
 // BRANDS MARQUEE
@@ -781,6 +786,16 @@ function preloadNext() {
   const nextIndex = (current + 1) % bgs.length;
   const nextEl = document.getElementById(bgs[nextIndex]);
   if (nextEl) loadVideo(nextEl);
+}
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+if (isIOS) {
+  bgs.forEach(id => {
+    const video = document.getElementById(id);
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.play().catch(() => {});
+  });
 }
 
 window.addEventListener('load', () => {
