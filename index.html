@@ -200,19 +200,18 @@
   @media (max-width: 768px) {
 
     /* NAV */
-    nav { padding: 16px 20px; }
+    nav { padding: 16px 20px; background: rgba(6,6,16,0.95); border-bottom: 1px solid rgba(0,200,255,0.1); position: relative; }
     .nav-links { display: none; }
     .nav-badge { display: none; }
 
     /* HERO */
     #bg1, #bg2, #bg3, #bg4, #bg5, #bg6 { display: none; }
-    .hero { min-height: 100vh; height: auto; background: linear-gradient(135deg, #060610 0%, #0d1a2e 40%, #060610 100%); }
+    .hero { min-height: auto; height: auto; background: #0d1a2e; padding-top: 80px; padding-bottom: 40px; }
 
     /* SECTIONS */
-    body { background: #060610; }
-    .services, .brands, .location, .reviews, .cars, .news, .contacts, footer { background: #060610; }
-    .hero::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(0,200,255,0.12) 0%, transparent 70%); top: 20%; left: 50%; transform: translateX(-50%); z-index: 1; }
-    .hero-content { align-items: center; padding-left: 20px; padding-right: 20px; padding-top: 120px; }
+    body { background: #0d1a2e; }
+    .services, .brands, .location, .reviews, .cars, .news, .contacts, footer { background: #0d1a2e; }
+    .hero-content { align-items: center; padding-left: 20px; padding-right: 20px; padding-top: 20px; }
     .hero-btns { width: 100%; }
     .hero-title { font-size: 28px; white-space: normal; padding-right: 0; }
     .hero-subtitle { font-size: 14px; padding-right: 0; }
