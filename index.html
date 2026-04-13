@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="video" href="images/car2n.mp4" type="video/mp4">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Space Grotesk', sans-serif; background: #060610; color: #fff; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; transition: background 0.4s; }
+  .nav-badge { display: inline-block; border: 1px solid rgba(0,200,255,0.4); color: #00c8ff; font-size: 10px; letter-spacing: 2px; padding: 6px 20px; border-radius: 14px; text-transform: uppercase; }
+  nav.scrolled { background: rgba(6,6,16,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,200,255,0.1); }
+  .logo { font-size: 20px; font-weight: 700; letter-spacing: 2px; color: #fff; }
+  .logo span { color: #00c8ff; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; letter-spacing: 0.5px; transition: color 0.3s; }
+  .nav-links a:hover { color: #00c8ff; }
+
+  /* HERO */
+  .hero { height: 100vh; position: relative; display: flex; align-items: flex-start; justify-content: flex-start; overflow: hidden; background: transparent; }
+  .hero-content { position: relative; z-index: 2; width: 100%; padding-left: 40px; padding-top: 80px; display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-title { font-size: 50px; font-weight: 700; line-height: 1.1; margin-bottom: 14px; white-space: nowrap; display: block; width: 100%; text-align: center; padding-left: 0; padding-right: 40px; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero-title span { color: #00c8ff; }
+  .hero-subtitle { font-size: 16px; color: rgba(255,255,255,0.55); margin-bottom: 28px; display: block; width: 100%; text-align: center; padding-left: 0; padding-right: 40px; animation: fadeUp 0.8s 0.2s ease both; }
+  .hero-btns { display: flex; flex-direction: column; gap: 10px; animation: fadeUp 0.8s 0.3s ease both; }
+  .btn-primary { background: #00c8ff; color: #000; width: 260px; height: 54px; border-radius: 4px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; letter-spacing: 0.5px; transition: background 0.3s ease, box-shadow 0.3s ease; }
+  .btn-primary:hover { background: #fff; box-shadow: 0 0 30px rgba(0,200,255,0.5); }
+  .btn-outline { background: transparent; color: #fff; width: 260px; height: 54px; border-radius: 4px; font-weight: 500; font-size: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.35); transition: border-color 0.3s ease, color 0.3s ease; }
+  .btn-outline:hover { border-color: #00c8ff; color: #00c8ff; }
+  .hero-divider { width: 260px; border: none; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 16px; }
+  .hero-stats { display: flex; flex-direction: row; justify-content: space-between; width: 260px; padding-top: 14px; animation: fadeUp 0.8s 0.4s ease both; }
+  .stat { text-align: left; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #00c8ff; }
+  .stat-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 3px; line-height: 1.3; }
+  .scroll-hint { display: none; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 2px; }
+  .scroll-line { display: none; width: 1px; height: 40px; background: linear-gradient(to bottom, #00c8ff, transparent); animation: scrollPulse 2s infinite; }
+
+  /* BG ELEMENTS */
+  #bg1, #bg2, #bg3, #bg4, #bg5, #bg6 { will-change: opacity; transform: translateZ(0); contain: strict; }
+
+  /* SECTIONS */
+  section { padding: 100px 60px; }
+  .section-label { font-size: 11px; letter-spacing: 4px; color: #00c8ff; text-transform: uppercase; margin-bottom: 16px; }
+  .section-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; margin-bottom: 16px; }
+  .section-sub { color: rgba(255,255,255,0.5); font-size: 16px; max-width: 500px; }
+
+  /* SERVICES */
+  .services { background: rgba(6,6,16,0.5); padding-top: 40px; padding-bottom: 30px; position: relative; z-index: 10; }
+  .services-header { text-align: center; margin-bottom: 60px; }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }
+  .service-card { background: #0a0a1a; padding: 40px 30px; transition: background 0.3s ease, transform 0.3s ease; cursor: default; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: #00c8ff; transform: scaleX(0); transition: transform 0.4s; }
+  .service-card:hover { background: #0f0f28; transform: translateY(-4px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 28px; margin-bottom: 16px; }
+  .service-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .service-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+  /* BRANDS */
+  .brands { background: rgba(6,6,16,0.5); padding-top: 30px; padding-bottom: 30px; overflow: hidden; position: relative; z-index: 10; }
+  .brands-title { text-align: center; font-size: 11px; letter-spacing: 4px; color: #00c8ff; text-transform: uppercase; margin-bottom: 40px; }
+  .marquee-wrap { display: flex; flex-direction: column; gap: 20px; }
+  .marquee-row { display: flex; gap: 0; white-space: nowrap; }
+  .marquee-inner { display: flex; gap: 0; animation: marquee1 25s linear infinite; }
+  .marquee-inner2 { display: flex; gap: 0; animation: marquee2 30s linear infinite; }
+  .brand-pill { padding: 10px 28px; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; letter-spacing: 1px; margin-right: 1px; white-space: nowrap; transition: color 0.3s ease, border-color 0.3s ease; }
+  .brand-pill:hover { color: #00c8ff; border-color: rgba(0,200,255,0.3); }
+
+  /* REVIEWS */
+  .reviews { background: rgba(6,6,16,0.5); position: relative; z-index: 10; }
+  .reviews-header { margin-bottom: 60px; text-align: center; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+  .review-card { background: #0a0a1a; padding: 36px; transition: background 0.3s; }
+  .review-card:hover { background: #0f0f28; }
+
+  /* CARS */
+  .cars { background: rgba(6,6,16,0.5); padding: 60px 60px; position: relative; z-index: 10; }
+  .cars-header { text-align: center; margin-bottom: 50px; }
+  .cars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .car-card { background: #0d0d1e; border-radius: 4px; overflow: hidden; transition: transform 0.3s; }
+  .car-card:hover { transform: translateY(-6px); }
+  .car-img { height: 200px; background: #1a2a3a; position: relative; display: flex; align-items: center; justify-content: center; color: #1a3a5a; font-size: 13px; }
+  .car-badge { position: absolute; top: 12px; left: 12px; background: #00c8ff; color: #000; font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 3px; }
+  .car-info { padding: 20px 24px 24px; }
+  .car-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 16px; }
+  .car-specs { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; margin-bottom: 16px; }
+  .spec-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .spec-row span:first-child { color: rgba(255,255,255,0.4); font-size: 12px; }
+  .spec-row span:last-child { color: rgba(255,255,255,0.85); font-size: 12px; }
+  .car-price { font-size: 22px; font-weight: 700; color: #00c8ff; margin-bottom: 16px; }
+  .car-btn { display: block; text-align: center; background: #00c8ff; color: #000; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 3px; text-decoration: none; transition: background 0.3s; }
+  .car-btn:hover { background: #fff; }
+  .cars-footer { text-align: center; margin-top: 36px; }
+  .cars-all { color: rgba(255,255,255,0.35); font-size: 13px; text-decoration: none; letter-spacing: 1px; transition: color 0.3s; }
+  .cars-all:hover { color: #00c8ff; }
+
+  /* NEWS */
+  .news { background: rgba(6,6,16,0.5); padding: 60px 60px; position: relative; z-index: 10; }
+  .news-header { text-align: center; margin-bottom: 40px; }
+  .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .news-block { border-radius: 4px; overflow: hidden; border: 1px solid rgba(0,200,255,0.15); background: #0d1525; }
+  .news-block-header { background: #0f1e35; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .news-block-info { display: flex; align-items: center; gap: 12px; }
+  .news-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; }
+  .news-avatar.tg { background: #229ED9; }
+  .news-avatar.yt { background: #CC0000; }
+  .news-name { font-size: 14px; font-weight: 600; color: white; }
+  .news-handle { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .news-open-btn { padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 600; color: white; text-decoration: none; }
+  .news-open-btn.tg { background: #229ED9; }
+  .news-open-btn.yt { background: #FF0000; }
+  .news-video { height: 320px; }
+  .news-body { padding: 30px 20px; display: flex; flex-direction: column; align-items: center; gap: 24px; height: 320px; justify-content: center; }
+  .news-icon-wrap { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .tg-bg { background: rgba(33,158,217,0.15); border: 1px solid rgba(33,158,217,0.3); }
+  .news-stats { display: flex; justify-content: space-around; width: 100%; }
+  .news-stat { text-align: center; }
+  .news-stat-num { font-size: 18px; font-weight: 700; color: white; }
+  .news-stat-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+  .news-cta-btn { display: block; text-align: center; padding: 12px 32px; border-radius: 4px; font-size: 13px; font-weight: 700; color: white; text-decoration: none; transition: opacity 0.3s; width: 100%; }
+  .news-cta-btn:hover { opacity: 0.85; }
+  .tg-btn { background: #229ED9; }
+
+  /* SOCIAL CARDS */
+  .social-card { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid rgba(0,200,255,0.1); transition: border-color 0.3s ease; flex: 1; }
+  .social-card:last-child { border-bottom: none; }
+  .social-card:hover { border-color: rgba(0,200,255,0.4); }
+  .social-card-info { display: flex; align-items: center; gap: 12px; }
+  .social-btn { border-radius: 20px; font-size: 12px; padding: 8px 18px; color: white; text-decoration: none; font-weight: 600; border: none; cursor: pointer; }
+
+  /* LOCATION */
+  .location { background: rgba(6,6,16,0.5); padding: 60px 60px; position: relative; z-index: 10; }
+  .location-header { text-align: center; margin-bottom: 40px; }
+  .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 380px; }
+  .location-map { border-radius: 4px; overflow: hidden; border: 1px solid rgba(0,200,255,0.15); }
+  .location-photos { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid rgba(0,200,255,0.15); }
+  .photo-slider { width: 100%; height: 100%; position: relative; }
+  .photo-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
+  .photo-slide.active { opacity: 1; }
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 22px; display: flex; align-items: center; justify-content: center; z-index: 5; transition: background 0.3s ease, border-color 0.3s ease; }
+  .slider-btn:hover { background: rgba(0,200,255,0.3); border-color: #00c8ff; }
+  .slider-btn.prev { left: 12px; }
+  .slider-btn.next { right: 12px; }
+  .slider-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 5; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s; }
+  .dot.active { background: #00c8ff; }
+  .stars { color: #00c8ff; font-size: 14px; letter-spacing: 2px; margin-bottom: 16px; }
+  .review-text { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.75); margin-bottom: 24px; }
+  .review-author { font-weight: 600; font-size: 14px; }
+  .review-source { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+  /* CONTACTS */
+  .contacts { background: rgba(6,6,16,0.5); padding: 60px 60px; position: relative; z-index: 10; }
+  .contacts-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; min-height: 440px; }
+  .contact-item { margin-bottom: 28px; }
+  .contact-label { font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 8px; }
+  .contact-value { font-size: 17px; font-weight: 500; }
+  .contact-value a { color: #00c8ff; text-decoration: none; }
+  .cta-block { margin-top: 32px; padding: 20px 24px; border: 1px solid rgba(0,200,255,0.2); background: rgba(0,200,255,0.03); border-radius: 4px; }
+  .cta-block p { color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 16px; }
+  .contacts-map { border-radius: 4px; overflow: hidden; border: 1px solid rgba(0,200,255,0.15); min-height: 440px; }
+
+  /* MODAL */
+  #serviceModal, #salesModal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: none; align-items: center; justify-content: center; }
+  #serviceModal.open, #salesModal.open { display: flex; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-card { background: #0d0d1e; border: 1px solid rgba(0,200,255,0.2); border-radius: 8px; max-width: 400px; width: calc(100% - 40px); padding: 32px; position: relative; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  .modal-title { font-size: 18px; font-weight: 700; color: #fff; }
+  .modal-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 24px; cursor: pointer; line-height: 1; padding: 0; transition: color 0.2s; }
+  .modal-close:hover { color: #fff; }
+  .modal-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+  .modal-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .modal-label { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 4px; }
+  .modal-value { font-size: 15px; font-weight: 500; color: #fff; }
+  .modal-btn { display: block; text-align: center; background: #00c8ff; color: #000; font-weight: 700; font-size: 15px; padding: 14px; border-radius: 4px; text-decoration: none; margin-top: 28px; transition: background 0.3s ease; }
+  .modal-btn:hover { background: #fff; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(6,6,16,0.8); position: relative; z-index: 10; }
+  .footer-logo { font-size: 16px; font-weight: 700; letter-spacing: 2px; }
+  .footer-logo span { color: #00c8ff; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.25); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+  @keyframes marquee1 { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes marquee2 { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+
+    /* NAV */
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .nav-badge { display: none; }
+
+    /* HERO */
+    .hero-content { padding-left: 20px; padding-top: 100px; }
+    .hero-title { font-size: 28px; white-space: normal; padding-right: 20px; }
+    .hero-subtitle { font-size: 14px; padding-right: 20px; }
+    .btn-primary { width: 100%; }
+    .btn-outline { width: 100%; }
+    .hero-divider { width: 100%; }
+    .hero-stats { width: 100%; }
+
+    /* SECTIONS */
+    section { padding: 50px 20px; }
+
+    /* SERVICES */
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* BRANDS */
+    .brands { padding: 30px 0; }
+
+    /* LOCATION */
+    .location { padding: 50px 20px; }
+    .location-grid { grid-template-columns: 1fr; height: auto; }
+    .location-map { height: 300px; }
+    .location-photos { height: 260px; }
+
+    /* CARS */
+    .cars { padding: 50px 20px; }
+    .cars-grid { grid-template-columns: 1fr; }
+
+    /* REVIEWS */
+    .reviews-grid { grid-template-columns: 1fr; }
+
+    /* NEWS */
+    .news { padding: 50px 20px; }
+    .news-grid { grid-template-columns: 1fr; }
+    .news-video { height: 220px; }
+    .news-body { height: auto; padding: 20px; }
+
+    /* CONTACTS */
+    .contacts { padding: 50px 20px; }
+    .contacts-inner { grid-template-columns: 1fr; }
+    .contacts-map { min-height: 300px; }
+    .contacts-map iframe { min-height: 300px; }
+
+    /* FOOTER */
+    footer { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">СОЮЗ<span>МОТОРС</span></div>
+  <div style="position:absolute; left:50%; transform:translateX(-50%);"><div class="nav-badge">Premium Service · Казань</div></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="document.querySelector('.services').scrollIntoView({behavior:'smooth'}); return false;">Услуги</a></li>
+    <li><a href="#" onclick="document.querySelector('.cars').scrollIntoView({behavior:'smooth'}); return false;">Бренды</a></li>
+    <li><a href="#" onclick="document.querySelector('.location-photos').scrollIntoView({behavior:'smooth'}); return false;">Фото</a></li>
+    <li><a href="#" onclick="document.querySelector('.reviews').scrollIntoView({behavior:'smooth'}); return false;">Отзывы</a></li>
+    <li><a href="#" onclick="document.querySelector('.contacts').scrollIntoView({behavior:'smooth'}); return false;">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video id="bg1" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:1; transition: opacity 1.5s ease;">
+    <source src="images/car1n.mp4" type="video/mp4">
+  </video>
+
+  <video id="bg2" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+    <source data-src="images/car2n.mp4" type="video/mp4">
+  </video>
+
+  <video id="bg3" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+    <source data-src="images/car3n.mp4" type="video/mp4">
+  </video>
+
+  <video id="bg4" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+    <source data-src="images/car4n.mp4" type="video/mp4">
+  </video>
+
+  <video id="bg5" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+    <source data-src="images/car5n.mp4" type="video/mp4">
+  </video>
+
+  <video id="bg6" autoplay muted loop playsinline
+       style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition: opacity 1.5s ease;">
+    <source data-src="images/car6n.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(6,6,16,0.5) 100%); z-index:1;"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Сервис нового поколения для <span>hEV</span> и <span>ДВС</span></h1>
+    <p class="hero-subtitle">Гибриды и электромобили — диагностика, ремонт и обслуживание под ключ</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal()">Записаться на сервис</button>
+      <button class="btn-outline" onclick="document.querySelector('.services').scrollIntoView({ behavior: 'smooth' })">Наши услуги</button>
+    </div>
+    <hr class="hero-divider">
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="s1">0</div><div class="stat-label">Рейтинг Яндекс</div></div>
+      <div class="stat"><div class="stat-num" id="s2">0</div><div class="stat-label">Клиентов</div></div>
+      <div class="stat"><div class="stat-num" id="s3">0</div><div class="stat-label">Опыта</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-header reveal">
+    <h2 class="section-title">Услуги</h2>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card"><div class="service-name">Диагностика hEV и ДВС</div><div class="service-desc">Полная компьютерная диагностика электросистем и двигателей внутреннего сгорания</div></div>
+    <div class="service-card"><div class="service-name">Детейлинг</div><div class="service-desc">Профессиональная химчистка, полировка и защита кузова и салона</div></div>
+    <div class="service-card"><div class="service-name">Электрика hEV</div><div class="service-desc">Ремонт высоковольтных систем гибридных и электрических автомобилей</div></div>
+    <div class="service-card"><div class="service-name">Шиномонтаж</div><div class="service-desc">Шины для электромобилей с учётом веса</div></div>
+    <div class="service-card"><div class="service-name">ТО и обслуживание</div><div class="service-desc">Плановое ТО по регламенту производителя</div></div>
+    <div class="service-card"><div class="service-name">Русификация и настройка Мастер Аккаунта</div><div class="service-desc">Перевод меню, настройка аккаунта и адаптация китайских авто под РФ</div></div>
+    <div class="service-card"><div class="service-name">Гарантийный ремонт</div><div class="service-desc">Авторизованный сервис для брендов</div></div>
+    <div class="service-card"><div class="service-name">Ремонт и диагностика ходовой части</div><div class="service-desc">Диагностика подвески, замена расходников и восстановление геометрии</div></div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands">
+  <div class="brands-title">Бренды которые мы обслуживаем</div>
+  <div class="marquee-wrap">
+    <div class="marquee-row"><div class="marquee-inner" id="m1"></div><div class="marquee-inner" id="m1b"></div></div>
+    <div class="marquee-row"><div class="marquee-inner2" id="m2"></div><div class="marquee-inner2" id="m2b"></div></div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<section class="location">
+  <div class="location-header">
+    <div class="section-label">ГДЕ МЫ НАХОДИМСЯ</div>
+    <h2 class="section-title">Наш сервис</h2>
+  </div>
+  <div class="location-grid">
+    <div class="location-map">
+      <video controls playsinline style="width:100%; height:100%; object-fit:cover; cursor:pointer; border-radius:4px;">
+        <source src="images/gde_opt.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="location-photos">
+      <div class="photo-slider">
+        <div class="photo-slide active">
+          <img src="images/service/s1.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+        <div class="photo-slide">
+          <img src="images/service/s2.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+        <div class="photo-slide">
+          <img src="images/service/s3.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <button class="slider-btn prev">&#8249;</button>
+      <button class="slider-btn next">&#8250;</button>
+      <div class="slider-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-label">Что говорят клиенты</div>
+    <h2 class="section-title">Отзывы</h2>
+  </div>
+  <div class="reviews-grid reveal">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Честный и ответственный сервис! Готов из Москвы приезжать. Очень рекомендую всем знакомым.</p>
+      <div class="review-author">Клиент СоюзМоторс</div>
+      <div class="review-source">2ГИС · декабрь 2024</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Купили Geely Monjaro. Сотрудники приветливые, помогли с выбором. Отдельное спасибо Ринату!</p>
+      <div class="review-author">Клиент СоюзМоторс</div>
+      <div class="review-source">Яндекс · ноябрь 2024</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Приобрёл BYD Leopard 5. Максимально быстро доставили и поставили на учёт. Отличная работа!</p>
+      <div class="review-author">Клиент СоюзМоторс</div>
+      <div class="review-source">2ГИС · октябрь 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARS -->
+<section class="cars">
+  <div class="cars-header">
+    <div class="section-label">АВТОМОБИЛИ В НАЛИЧИИ</div>
+    <h2 class="section-title">Купить у нас</h2>
+  </div>
+  <div class="cars-grid">
+
+    <div class="car-card">
+      <div class="car-img">
+        <img src="images/zeekr.webp" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        <span class="car-badge">В наличии</span>
+      </div>
+      <div class="car-info">
+        <h3 class="car-name">ZEEKR 9X ULTRA</h3>
+        <div class="car-specs">
+          <div class="spec-row"><span>Мощность</span><span>898 л.с.</span></div>
+          <div class="spec-row"><span>Батарея</span><span>70 кВт·ч</span></div>
+          <div class="spec-row"><span>0–100 км/ч</span><span>4.2 с.</span></div>
+        </div>
+        <div class="car-price">11 490 000 ₽</div>
+        <button class="car-btn" onclick="openSalesModal()">Узнать подробнее</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img">
+        <img src="images/tang L.webp" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        <span class="car-badge">В наличии</span>
+      </div>
+      <div class="car-info">
+        <h3 class="car-name">BYD TANG L DM-p</h3>
+        <div class="car-specs">
+          <div class="spec-row"><span>Мощность</span><span>544+156 л.с.</span></div>
+          <div class="spec-row"><span>Батарея</span><span>35.6 кВт·ч</span></div>
+          <div class="spec-row"><span>0–100 км/ч</span><span>4.3 с.</span></div>
+        </div>
+        <div class="car-price">6 290 000 ₽</div>
+        <button class="car-btn" onclick="openSalesModal()">Узнать подробнее</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-img">
+        <img src="images/voyah.webp" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        <span class="car-badge">В наличии</span>
+      </div>
+      <div class="car-info">
+        <h3 class="car-name">VOYAH DREAM</h3>
+        <div class="car-specs">
+          <div class="spec-row"><span>Мощность</span><span>476 л.с.</span></div>
+          <div class="spec-row"><span>Батарея</span><span>88 кВт·ч</span></div>
+          <div class="spec-row"><span>0–100 км/ч</span><span>4.0 с.</span></div>
+        </div>
+        <div class="car-price">8 490 000 ₽</div>
+        <button class="car-btn" onclick="openSalesModal()">Узнать подробнее</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="cars-footer">
+    <a href="https://soyuzauto.ru" target="_blank" class="cars-all">
+      Смотреть все автомобили →
+    </a>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news">
+  <div class="news-header">
+    <div class="section-label">СЛЕДИТЕ ЗА НАМИ</div>
+    <h2 class="section-title">Новости и видео</h2>
+  </div>
+  <div class="news-grid">
+
+    <div class="news-block" style="display:flex; flex-direction:column;">
+      <div class="social-card">
+        <div class="social-card-info">
+          <div class="news-avatar tg">✈</div>
+          <div>
+            <div class="news-name">Telegram</div>
+            <div class="news-handle">@alibabacarsru</div>
+          </div>
+        </div>
+        <a href="https://t.me/alibabacarsru" target="_blank" class="social-btn" style="background:#229ED9;">Перейти →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-card-info">
+          <div class="news-avatar" style="background:#0077FF;">ВК</div>
+          <div>
+            <div class="news-name">ВКонтакте</div>
+            <div class="news-handle">@soyuzmotorsru</div>
+          </div>
+        </div>
+        <a href="https://vk.com/soyuzmotorsru" target="_blank" class="social-btn" style="background:#0077FF;">Перейти →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-card-info">
+          <div class="news-avatar" style="background:#FF0000;">▶</div>
+          <div>
+            <div class="news-name">YouTube</div>
+            <div class="news-handle">@soyuzmotorsru</div>
+          </div>
+        </div>
+        <a href="https://youtube.com/@soyuzmotorsru" target="_blank" class="social-btn" style="background:#FF0000;">Перейти →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-card-info">
+          <div class="news-avatar" style="background:#FF6D00;">Д</div>
+          <div>
+            <div class="news-name">Дзен</div>
+            <div class="news-handle">@soyuzmotors</div>
+          </div>
+        </div>
+        <a href="https://dzen.ru/soyuzmotors" target="_blank" class="social-btn" style="background:#FF6D00;">Перейти →</a>
+      </div>
+    </div>
+
+    <div class="news-block">
+      <div class="news-block-header">
+        <div class="news-block-info">
+          <div class="news-avatar yt">R</div>
+          <div>
+            <div class="news-name">СоюзМоторс</div>
+            <div class="news-handle">Видео о авто и сервисе</div>
+          </div>
+        </div>
+        <a href="https://rutube.ru/channel/39247107/" target="_blank" class="news-open-btn yt">Перейти →</a>
+      </div>
+      <div class="news-video">
+        <iframe
+          src="https://rutube.ru/play/embed/36e2394845b6e2b5869d79023c707799"
+          width="100%"
+          height="100%"
+          frameborder="0"
+          allowfullscreen
+          style="border:none;">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts">
+  <div class="contacts-inner">
+    <div class="reveal">
+      <div class="section-label">Как нас найти</div>
+      <h2 class="section-title">Контакты</h2>
+      <div class="contact-item">
+        <div class="contact-label">Адрес</div>
+        <div class="contact-value">Казань, Пестречинский р-н,<br>д. Званка, ул. Зелёная, 24</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Телефон</div>
+        <div class="contact-value">
+          <a href="tel:+79030612991">+7 (903) 061-29-91</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Режим работы</div>
+        <div class="contact-value">Пн–Пт · 9:00–19:00</div>
+      </div>
+      <div class="cta-block">
+        <p>Запишитесь онлайн — подберём удобное время</p>
+        <button class="btn-primary" onclick="openModal()">Записаться на сервис</button>
+      </div>
+    </div>
+    <div class="contacts-map reveal">
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?ll=49.381577%2C55.803332&z=16&pt=49.381577,55.803332,pm2rdm"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        allowfullscreen
+        style="border:none; min-height:440px;">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">СОЮЗ<span>МОТОРС</span></div>
+  <div class="footer-copy">© 2025 СоюзМоторс · soyuzauto.ru</div>
+</footer>
+
+<div id="salesModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">Купить автомобиль</div>
+      <button class="modal-close" onclick="closeSalesModal()">×</button>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">📞</div>
+      <div>
+        <div class="modal-label">Телефон</div>
+        <div class="modal-value">+7 (960) 089-74-52</div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">🕐</div>
+      <div>
+        <div class="modal-label">Режим работы</div>
+        <div class="modal-value">Пн–Вс · 9:00–19:00</div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">📍</div>
+      <div>
+        <div class="modal-label">Адрес</div>
+        <div class="modal-value">Казань, д. Званка, ул. Зелёная, 24</div>
+      </div>
+    </div>
+    <a href="tel:+79600897452" class="modal-btn">Позвонить сейчас</a>
+  </div>
+</div>
+
+<div id="serviceModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">Записаться на сервис</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">📞</div>
+      <div>
+        <div class="modal-label">Телефон</div>
+        <div class="modal-value">+7 (903) 061-29-91</div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">🕐</div>
+      <div>
+        <div class="modal-label">Режим работы</div>
+        <div class="modal-value">Пн–Пт · 9:00–19:00</div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-icon">📍</div>
+      <div>
+        <div class="modal-label">Адрес</div>
+        <div class="modal-value">Казань, д. Званка, ул. Зелёная, 24</div>
+      </div>
+    </div>
+    <a href="tel:+79030612991" class="modal-btn">Позвонить сейчас</a>
+  </div>
+</div>
+
+<script>
+// MODAL
+function openModal() {
+  document.getElementById('serviceModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('serviceModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('serviceModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+function openSalesModal() {
+  document.getElementById('salesModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSalesModal() {
+  document.getElementById('salesModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('salesModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSalesModal();
+});
+
+// NAV scroll
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+// COUNTER ANIMATION
+function animateCount(el, target, suffix, decimals) {
+  let start = 0, duration = 2000, startTime = null;
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    let progress = Math.min((timestamp - startTime) / duration, 1);
+    let val = progress * target;
+    el.textContent = decimals ? val.toFixed(1) + suffix : Math.floor(val) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(document.getElementById('s1'), 4.9, '', true);
+      animateCount(document.getElementById('s2'), 500, '+', false);
+      animateCount(document.getElementById('s3'), 8, ' лет', false);
+      statsObserver.disconnect();
+    }
+  });
+});
+statsObserver.observe(document.getElementById('s1'));
+
+// BRANDS MARQUEE
+const brands1 = ['AVATR','VOYAH','BYD','ZEEKR','AITO','LIXIANG','LEOPARD','DENZA','LINK&CO','NIO','XPENG'];
+const brands2 = ['Audi','Volkswagen','TANK','JAECOO','OMODA','CHERY','GEELY','HAVAL','JAC','BMW','Mercedes-Benz'];
+['m1','m1b'].forEach(id => {
+  document.getElementById(id).innerHTML = brands1.map(b => `<div class="brand-pill">${b}</div>`).join('');
+});
+['m2','m2b'].forEach(id => {
+  document.getElementById(id).innerHTML = brands2.map(b => `<div class="brand-pill">${b}</div>`).join('');
+});
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// PHOTO SLIDER
+const slides = document.querySelectorAll('.photo-slide');
+const dots = document.querySelectorAll('.dot');
+let slideIndex = 0;
+function goToSlide(n) {
+  slides[slideIndex].classList.remove('active');
+  dots[slideIndex].classList.remove('active');
+  slideIndex = (n + slides.length) % slides.length;
+  slides[slideIndex].classList.add('active');
+  dots[slideIndex].classList.add('active');
+}
+document.querySelector('.prev').addEventListener('click', () => goToSlide(slideIndex - 1));
+document.querySelector('.next').addEventListener('click', () => goToSlide(slideIndex + 1));
+dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+let sliderTimer = setInterval(() => goToSlide(slideIndex + 1), 5000);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearInterval(sliderTimer);
+  } else {
+    sliderTimer = setInterval(() => goToSlide(slideIndex + 1), 5000);
+  }
+});
+
+// BG SLIDER
+const bgs = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5', 'bg6'];
+const videoSources = {
+  'bg1': 'images/car1n.mp4',
+  'bg2': 'images/car2n.mp4',
+  'bg3': 'images/car3n.mp4',
+  'bg4': 'images/car4n.mp4',
+  'bg5': 'images/car5n.mp4',
+  'bg6': 'images/car6n.mp4'
+};
+let current = 0;
+const INTERVAL = 5000; // ms между сменами
+
+function getSource(videoEl) {
+  return videoEl.querySelector('source');
+}
+
+function loadVideo(videoEl) {
+  const source = getSource(videoEl);
+  if (!source.src || source.src === window.location.href) {
+    source.src = videoSources[videoEl.id];
+    videoEl.load();
+  }
+}
+
+function preloadNext() {
+  const nextIndex = (current + 1) % bgs.length;
+  const nextEl = document.getElementById(bgs[nextIndex]);
+  if (nextEl) loadVideo(nextEl);
+}
+
+window.addEventListener('load', () => {
+  // Запускаем первое видео (bg1 уже имеет src)
+  const firstEl = document.getElementById(bgs[0]);
+  firstEl.play();
+
+  // Preload bg2 сразу (через 3 сек чтобы не мешать bg1)
+  setTimeout(preloadNext, 3000);
+
+  let elapsed = 0;
+
+  function startBgInterval() {
+    return setInterval(() => {
+      elapsed += 1000;
+
+      // За 3 секунды до переключения — preload следующего
+      if (elapsed === INTERVAL - 3000) {
+        preloadNext();
+      }
+
+      // Переключение
+      if (elapsed >= INTERVAL) {
+        elapsed = 0;
+        const currentEl = document.getElementById(bgs[current]);
+        currentEl.style.opacity = '0';
+        current = (current + 1) % bgs.length;
+        const nextEl = document.getElementById(bgs[current]);
+
+        // Убедимся что src загружен
+        loadVideo(nextEl);
+
+        nextEl.style.opacity = '1';
+        nextEl.currentTime = 0;
+        nextEl.play();
+
+        // Preload следующего за следующим
+        setTimeout(preloadNext, 3000);
+      }
+    }, 1000);
+  }
+
+  let bgInterval = startBgInterval();
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearInterval(bgInterval);
+    } else {
+      bgInterval = startBgInterval();
+    }
+  });
+});
+</script>
+</body>
+</html>
