@@ -205,7 +205,7 @@
 
     /* ФОН - везде один цвет */
     body { background: #0d1a2e; }
-    .hero { background: #0d1a2e !important; min-height: 100vh; height: auto; }
+    .hero { background: #0d1a2e !important; min-height: 100vh; height: auto; margin-bottom: 0; padding-bottom: 0; }
     section { background: #0d1a2e !important; padding: 50px 20px; }
     .brands { background: #0d1a2e !important; padding: 30px 0; }
     footer { background: #0d1a2e !important; padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
@@ -223,8 +223,11 @@
     .hero-divider { width: 100%; }
     .hero-stats { width: 100%; }
 
+    /* SERVICES */
+    section.services { margin-top: 0; padding-top: 40px; }
+
     /* ОТКЛЮЧАЕМ АНИМАЦИЮ */
-    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .reveal { opacity: 1 !important; transform: translateY(0) !important; transition: none !important; }
 
     /* СЕТКИ */
     .services-grid { grid-template-columns: repeat(2, 1fr); }
