@@ -245,8 +245,9 @@
     .location-photos { height: 260px; }
 
     /* HERO С ФОТО */
-    .hero { background: url('images/Leo 5.jpg') center center / cover no-repeat !important; background-attachment: scroll !important; min-height: 100vh; height: auto; margin-bottom: 0; padding-bottom: 0; position: relative; }
+    .hero { background: rgba(6,6,16,0.25) !important; min-height: 100vh; height: auto; margin-bottom: 0; padding-bottom: 0; position: relative; }
     .hero::after { content: ''; position: absolute; inset: 0; background: rgba(6,6,16,0.25); z-index: 1; }
+    #hero-mobile-bg { filter: brightness(0.75); }
     .hero-content { position: relative; z-index: 2; }
 
     /* СЕКЦИИ — единый фон */
@@ -270,6 +271,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <img src="images/Leo 5.jpg" id="hero-mobile-bg" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0;">
   <video id="bg1" autoplay muted loop playsinline webkit-playsinline
        style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:1; transition: opacity 1.5s ease; -webkit-playsinline:1;">
     <source src="images/car1n.mp4" type="video/mp4">
@@ -655,6 +657,11 @@
 </div>
 
 <script>
+// MOBILE HERO BG
+if (window.innerWidth <= 768) {
+  document.getElementById('hero-mobile-bg').style.display = 'block';
+}
+
 // MODAL
 function openModal() {
   document.getElementById('serviceModal').classList.add('open');
