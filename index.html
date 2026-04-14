@@ -198,20 +198,23 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 768px) {
-
     /* NAV */
-    nav { padding: 16px 20px; background: rgba(6,6,16,0.95); border-bottom: 1px solid rgba(0,200,255,0.1); position: relative; }
+    nav { padding: 16px 20px; position: relative; }
     .nav-links { display: none; }
     .nav-badge { display: none; }
 
-    /* HERO */
-    #bg1, #bg2, #bg3, #bg4, #bg5, #bg6 { display: none; }
-    .hero { background: #060610; }
-
-    /* SECTIONS */
+    /* ФОН - везде один цвет */
     body { background: #0d1a2e; }
-    .services, .brands, .location, .reviews, .cars, .news, .contacts, footer, section { background: #060610 !important; }
-    .hero-content { align-items: center; padding-left: 20px; padding-right: 20px; padding-top: 20px; }
+    .hero { background: #0d1a2e !important; min-height: 100vh; height: auto; }
+    section { background: #0d1a2e !important; padding: 50px 20px; }
+    .brands { background: #0d1a2e !important; padding: 30px 0; }
+    footer { background: #0d1a2e !important; padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+
+    /* СКРЫВАЕМ ВИДЕО */
+    #bg1, #bg2, #bg3, #bg4, #bg5, #bg6 { display: none !important; }
+
+    /* HERO КОНТЕНТ */
+    .hero-content { align-items: center; padding: 100px 20px 60px; }
     .hero-btns { width: 100%; }
     .hero-title { font-size: 28px; white-space: normal; padding-right: 0; }
     .hero-subtitle { font-size: 14px; padding-right: 0; }
@@ -220,42 +223,24 @@
     .hero-divider { width: 100%; }
     .hero-stats { width: 100%; }
 
-    /* SECTIONS */
-    section { padding: 50px 20px; }
+    /* ОТКЛЮЧАЕМ АНИМАЦИЮ */
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-    /* SERVICES */
+    /* СЕТКИ */
     .services-grid { grid-template-columns: repeat(2, 1fr); }
-
-    /* BRANDS */
-    .brands { padding: 30px 0; }
-
-    /* LOCATION */
-    .location { padding: 50px 20px; }
-    .location-grid { grid-template-columns: 1fr; height: auto; }
-    .location-map { height: 300px; }
-    .location-photos { height: 260px; }
-
-    /* CARS */
-    .cars { padding: 50px 20px; }
     .cars-grid { grid-template-columns: 1fr; }
-
-    /* REVIEWS */
     .reviews-grid { grid-template-columns: 1fr; }
-
-    /* NEWS */
-    .news { padding: 50px 20px; }
     .news-grid { grid-template-columns: 1fr; }
     .news-video { height: 220px; }
     .news-body { height: auto; padding: 20px; }
-
-    /* CONTACTS */
-    .contacts { padding: 50px 20px; }
     .contacts-inner { grid-template-columns: 1fr; }
     .contacts-map { min-height: 300px; }
     .contacts-map iframe { min-height: 300px; }
 
-    /* FOOTER */
-    footer { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+    /* ЛОКАЦИЯ */
+    .location-grid { grid-template-columns: 1fr; height: auto; }
+    .location-map { height: 300px; }
+    .location-photos { height: 260px; }
   }
 </style>
 </head>
