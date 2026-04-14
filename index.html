@@ -245,26 +245,13 @@
     .location-map { height: 300px; }
     .location-photos { height: 260px; }
 
-    /* ЧЕРЕДОВАНИЕ ФОНОВ */
-    .services { background: #0d1a2e !important; }
+    /* HERO С ФОТО */
+    .hero { background: url('images/Leo 5.jpeg') center center / cover no-repeat !important; position: relative; min-height: 100vh; height: auto; margin-bottom: 0; padding-bottom: 0; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: rgba(6,6,16,0.7); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; }
 
-    .brands { background: url('images/zeekr.webp') center center / cover no-repeat !important; position: relative; }
-    .brands::before { content: ''; position: absolute; inset: 0; background: rgba(6,6,16,0.75); z-index: 0; }
-    .brands .brands-title, .brands .marquee-wrap { position: relative; z-index: 1; }
-
-    .location { background: #0d1a2e !important; }
-
-    .reviews { background: url('images/voyah.webp') center center / cover no-repeat !important; position: relative; }
-    .reviews::before { content: ''; position: absolute; inset: 0; background: rgba(6,6,16,0.75); z-index: 0; }
-    .reviews .reviews-header, .reviews .reviews-grid { position: relative; z-index: 1; }
-
-    .cars { background: #0d1a2e !important; }
-
-    .news { background: url('images/tang L.webp') center center / cover no-repeat !important; position: relative; }
-    .news::before { content: ''; position: absolute; inset: 0; background: rgba(6,6,16,0.75); z-index: 0; }
-    .news .news-header, .news .news-grid { position: relative; z-index: 1; }
-
-    .contacts { background: #0d1a2e !important; }
+    /* СЕКЦИИ — единый фон */
+    .services, .brands, .location, .reviews, .cars, .news, .contacts { background: #0d1a2e !important; }
   }
 </style>
 </head>
