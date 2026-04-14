@@ -303,11 +303,21 @@
   </video>
   <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(6,6,16,0.5) 100%); z-index:1;"></div>
   <div class="hero-content">
-    <h1 class="hero-title">Сервис нового поколения для <span>hEV</span> и <span>ДВС</span></h1>
+    <h1 class="hero-title">Сервис нового поколения для <span>PHEV</span> и <span>ДВС</span></h1>
     <p class="hero-subtitle">Гибриды и электромобили — диагностика, ремонт и обслуживание под ключ</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="openModal()">Записаться на сервис</button>
       <button class="btn-outline" onclick="document.querySelector('.services').scrollIntoView({ behavior: 'smooth' })">Наши услуги</button>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <a href="https://max.ru/join/bnwe8EwtZ9V6AHtFU8jAZ1SwuOLESS8iH-0KXqnp6E8" target="_blank" style="display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:600; color:white; background:rgba(123,47,190,0.2); border:1px solid rgba(123,47,190,0.4);">
+        <div style="width:24px; height:24px; border-radius:50%; background:#7B2FBE; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">M</div>
+        MAX
+      </a>
+      <a href="https://t.me/alibabacarsru" target="_blank" style="display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:600; color:white; background:rgba(34,158,217,0.2); border:1px solid rgba(34,158,217,0.4);">
+        <div style="width:24px; height:24px; border-radius:50%; background:#229ED9; display:flex; align-items:center; justify-content:center; font-size:11px;">✈</div>
+        Telegram
+      </a>
     </div>
     <hr class="hero-divider">
     <div class="hero-stats">
@@ -324,9 +334,9 @@
     <h2 class="section-title">Услуги</h2>
   </div>
   <div class="services-grid reveal">
-    <div class="service-card"><div class="service-name">Диагностика hEV и ДВС</div><div class="service-desc">Полная компьютерная диагностика электросистем и двигателей внутреннего сгорания</div></div>
+    <div class="service-card"><div class="service-name">Диагностика PHEV и ДВС</div><div class="service-desc">Полная компьютерная диагностика электросистем и двигателей внутреннего сгорания</div></div>
     <div class="service-card"><div class="service-name">Детейлинг</div><div class="service-desc">Профессиональная химчистка, полировка и защита кузова и салона</div></div>
-    <div class="service-card"><div class="service-name">Электрика hEV</div><div class="service-desc">Ремонт высоковольтных систем гибридных и электрических автомобилей</div></div>
+    <div class="service-card"><div class="service-name">Электрика PHEV</div><div class="service-desc">Ремонт высоковольтных систем гибридных и электрических автомобилей</div></div>
     <div class="service-card"><div class="service-name">Шиномонтаж</div><div class="service-desc">Шины для электромобилей с учётом веса</div></div>
     <div class="service-card"><div class="service-name">ТО и обслуживание</div><div class="service-desc">Плановое ТО по регламенту производителя</div></div>
     <div class="service-card"><div class="service-name">Русификация и настройка Мастер Аккаунта</div><div class="service-desc">Перевод меню, настройка аккаунта и адаптация китайских авто под РФ</div></div>
@@ -359,6 +369,15 @@
     <div class="location-photos">
       <div class="photo-slider">
         <div class="photo-slide active">
+          <img src="images/service/s6.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+        <div class="photo-slide">
+          <img src="images/service/s5.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+        <div class="photo-slide">
+          <img src="images/service/s7.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
+        <div class="photo-slide">
           <img src="images/service/s1.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
         </div>
         <div class="photo-slide">
@@ -367,11 +386,18 @@
         <div class="photo-slide">
           <img src="images/service/s3.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
         </div>
+        <div class="photo-slide">
+          <img src="images/service/s4.jpg" style="width:100%; height:100%; object-fit:cover;" loading="lazy" decoding="async">
+        </div>
       </div>
       <button class="slider-btn prev">&#8249;</button>
       <button class="slider-btn next">&#8250;</button>
       <div class="slider-dots">
         <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
       </div>
@@ -388,21 +414,21 @@
   <div class="reviews-grid reveal">
     <div class="review-card">
       <div class="stars">★★★★★</div>
-      <p class="review-text">Честный и ответственный сервис! Готов из Москвы приезжать. Очень рекомендую всем знакомым.</p>
-      <div class="review-author">Клиент СоюзМоторс</div>
-      <div class="review-source">2ГИС · декабрь 2024</div>
+      <p class="review-text">Оперативно поменяли резину, хотя было много авто в очереди. Сделали качественно. Живу рядом, теперь к ним буду заезжать. Ценник разумный.</p>
+      <div class="review-author">Дамир К.</div>
+      <div class="review-source">Яндекс · 2025</div>
     </div>
     <div class="review-card">
       <div class="stars">★★★★★</div>
-      <p class="review-text">Купили Geely Monjaro. Сотрудники приветливые, помогли с выбором. Отдельное спасибо Ринату!</p>
-      <div class="review-author">Клиент СоюзМоторс</div>
-      <div class="review-source">Яндекс · ноябрь 2024</div>
+      <p class="review-text">Сервис находился по пути, нужно было срочно заехать посмотреть машину. Очереди большой не было и меня быстро принял мастер Азат. Он посмотрел машину, сказал что нужно поменять, запчасти можно заказать сразу тут у них. Я оставила машину и вернулась за ней вечером, машина на ходу, едет хорошо, мастер грамотный, мне все понравилось. По необходимости буду обращаться к ним.</p>
+      <div class="review-author">Анастасия Мяндина</div>
+      <div class="review-source">Яндекс · 2025</div>
     </div>
     <div class="review-card">
       <div class="stars">★★★★★</div>
-      <p class="review-text">Приобрёл BYD Leopard 5. Максимально быстро доставили и поставили на учёт. Отличная работа!</p>
-      <div class="review-author">Клиент СоюзМоторс</div>
-      <div class="review-source">2ГИС · октябрь 2024</div>
+      <p class="review-text">Не первый раз приезжаю в этот сервис. Очень грамотные ребята. Владислав сделал даже то, что ранее не могли в других сервисах сделать. Он гений во всех программах разных китайских машин. Теперь только сюда к ним приезжаю.</p>
+      <div class="review-author">Эльвира Сабирова</div>
+      <div class="review-source">Яндекс · 2025</div>
     </div>
   </div>
 </section>
@@ -522,6 +548,16 @@
           </div>
         </div>
         <a href="https://dzen.ru/soyuzmotors" target="_blank" class="social-btn" style="background:#FF6D00;">Перейти →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-card-info">
+          <div class="news-avatar" style="background:#7B2FBE;">M</div>
+          <div>
+            <div class="news-name">MAX</div>
+            <div class="news-handle">@soyuzmotors</div>
+          </div>
+        </div>
+        <a href="https://max.ru/join/bnwe8EwtZ9V6AHtFU8jAZ1SwuOLESS8iH-0KXqnp6E8" target="_blank" class="social-btn" style="background:#7B2FBE;">Перейти →</a>
       </div>
     </div>
 
@@ -728,8 +764,8 @@ const statsObserver = new IntersectionObserver(entries => {
 statsObserver.observe(document.getElementById('s1'));
 
 // BRANDS MARQUEE
-const brands1 = ['AVATR','VOYAH','BYD','ZEEKR','AITO','LIXIANG','LEOPARD','DENZA','LINK&CO','NIO','XPENG'];
-const brands2 = ['Audi','Volkswagen','TANK','JAECOO','OMODA','CHERY','GEELY','HAVAL','JAC','BMW','Mercedes-Benz'];
+const brands1 = ['AVATR','VOYAH','BYD','ZEEKR','AITO','LIXIANG','LEOPARD','DENZA','LINK&CO','NIO','XPENG','AVATR','VOYAH','BYD','ZEEKR','AITO','LIXIANG','LEOPARD','DENZA','LINK&CO','NIO','XPENG'];
+const brands2 = ['Audi','Volkswagen','TANK','GEELY','BMW','Mercedes-Benz','Audi','Volkswagen','TANK','GEELY','BMW','Mercedes-Benz'];
 ['m1','m1b'].forEach(id => {
   document.getElementById(id).innerHTML = brands1.map(b => `<div class="brand-pill">${b}</div>`).join('');
 });
